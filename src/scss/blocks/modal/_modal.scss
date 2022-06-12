@@ -57,4 +57,14 @@
         width: 280px;
         margin: 0 auto;
     }
+
+    &_open {
+        display: block;
+        animation-name: fade;
+        animation-duration: 0.5s;
+        @keyframes fade {
+          from {opacity: 0.3;}
+          to  {opacity: 1;}
+        }
+    }
 }

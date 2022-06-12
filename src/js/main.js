@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-// Tabs
+	// Tabs
 	const tabs = document.querySelectorAll('.tabheader__item'),
-				tabsContent = document.querySelectorAll('.tabcontent'),
-				tabsParent = document.querySelector('.tabheader__items');
-	
+		tabsContent = document.querySelectorAll('.tabcontent'),
+		tabsParent = document.querySelector('.tabheader__items');
+
 	function hideTabContent() {
 		tabsContent.forEach(el => {
 			el.classList.remove('tabcontent_active');
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	function showTabContent(i = 0) { 
+	function showTabContent(i = 0) {
 		tabsContent[i].classList.add('tabcontent_active');
 		tabs[i].classList.add('tabheader__item_active');
 	}
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			seconds = 0;
 		} else {
 			days = Math.floor(t / (1000 * 60 * 60 * 24));
-			hours = Math.floor( (t / (1000 * 60 * 60) % 24) );
+			hours = Math.floor((t / (1000 * 60 * 60) % 24));
 			minutes = Math.floor((t / 1000 / 60) % 60);
 			seconds = Math.floor((t / 1000) % 60);
 		}
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		};
 	}
 
-	function getZero(num) {  
+	function getZero(num) {
 		if (num >= 0 && num < 10) {
 			return `0${num}`;
 		} else {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function setClock(selector, endtime) {  
+	function setClock(selector, endtime) {
 		const timer = document.querySelector(selector),
 			days = timer.querySelector('#days'),
 			hours = timer.querySelector('#hours'),
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			seconds = timer.querySelector('#seconds'),
 			timeInterval = setInterval(updateClock, 1000);
 
-		updateClock();	// инициализируем таймер
-		
-		function updateClock() {  
+		updateClock(); // инициализируем таймер
+
+		function updateClock() {
 			const t = getTimeRemaining(endtime);
 
 			days.innerHTML = getZero(t.days);
@@ -97,4 +97,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	setClock('.timer', deadline);
+
+	// Modal
+
+	const modal = document.querySelector('.modal'),
+		modalOpenBtn = document.querySelectorAll('[data-modal]'),
+		modalCloseBtn = document.querySelector('[data-close]');
+
+	modalOpenBtn.forEach(el => {
+		el.addEventListener('click', () => {
+			modal.classList.add('modal_open');
+			document.body.style.overflow = 'hidden';
+		});
+	});
+
+	function closeModal() {  
+		modal.classList.remove('modal_open');
+		document.body.style.remove = '';
+	}
+
+	modalCloseBtn.addEventListener('click', closeModal);
+
+	modal.addEventListener('click', (event) => {
+		if (event.target === modal) {
+			closeModal();
+		}
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.code === 'Escape' && modal.classList.contains('modal_open')) {
+			closeModal();
+		}
+	});
 });
