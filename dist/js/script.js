@@ -228,12 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', showModalByScroll); // Class for card
 
   class MenuCard {
-    constructor(src, alt, title, descr, price, parentSelector) {
+    constructor(src, alt, title, descr, price, parentSelector, ...anyClasses) {
       this.src = src;
       this.alt = alt;
       this.title = title;
       this.descr = descr;
       this.price = price;
+      this.anyClasses = anyClasses;
       this.parent = document.querySelector(parentSelector);
       this.transfer = 50;
       this.changeToRUB();
@@ -245,7 +246,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     render() {
       const el = document.createElement('div');
-      el.classList.add('menu__item');
+
+      if (this.anyClasses.length === 0) {
+        this.el = 'menu__item';
+        el.classList.add(this.el);
+      } else {
+        this.anyClasses.forEach(className => el.classList.add(className));
+      }
+
       el.innerHTML = `
 				<img src=${this.src} alt=${this.alt}>
 				<h3 class="menu__item-subtitle">${this.title}</h3>
@@ -261,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
-  new MenuCard("img/tabs/vegy.jpg", "vegy", 'Меню “Фитнес”', 'Меню “Фитнес” - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 4.5, '.menu__field > .container').render();
+  new MenuCard("img/tabs/vegy.jpg", "vegy", 'Меню “Фитнес”', 'Меню “Фитнес” - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 4.5, '.menu__field .container').render();
   new MenuCard("img/tabs/elite.jpg", "elite", 'Меню “Премиум”', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в кафе, столовую или ресторан!', 11, '.menu__field .container').render();
   new MenuCard("img/tabs/post.jpg", "post", 'Меню “Постное”', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 9, '.menu__field .container').render();
 });
