@@ -593,6 +593,9 @@ a {
   max-width: 500px;
   margin: 40px auto;
 }
+.modal__dialog_close {
+  display: none;
+}
 .modal__content {
   position: relative;
   width: 100%;

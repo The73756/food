@@ -11,6 +11,10 @@
     &__dialog {
         max-width: 500px;
         margin: 40px auto;
+
+        &_close {
+            display: none;
+        }
     }
     &__content {
         position: relative;
