@@ -593,9 +593,6 @@ a {
   max-width: 500px;
   margin: 40px auto;
 }
-.modal__dialog_close {
-  display: none;
-}
 .modal__content {
   position: relative;
   width: 100%;
@@ -645,6 +642,9 @@ a {
   display: block;
   animation-name: fade;
   animation-duration: 0.5s;
+}
+.modal__dialog_close {
+  display: none;
 }
 @keyframes fade {
   from {
