@@ -405,7 +405,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	//Calc
 
 	const result = document.querySelector('.calculating__result span');
-	let sex = 'female', height, weight, age, ratio = '1.375';
+
+	let sex, height, weight, age, ratio;
+
+	if (localStorage.getItem('sex')) {
+		sex = localStorage.getItem('sex');
+	} else {
+		sex = 'female';
+		localStorage.setItem('sex', 'female');
+	}
+	
+	if (localStorage.getItem('ratio')) {
+		ratio = localStorage.getItem('ratio');
+	} else {
+		ratio = 1.375;
+		localStorage.setItem('ratio', 1.375);
+	}
+
+	function initlocalSettings(selector, activeClass) { 
+		const elements = document.querySelectorAll(selector);
+
+		elements.forEach(el => {
+			el.classList.remove(activeClass);
+			if (el.getAttribute('id') === localStorage.getItem('sex')) {
+				el.classList.add(activeClass);
+			}
+			if (el.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
+				el.classList.add(activeClass);
+			}
+		});
+	}
 
 	function calcTotal() {  
 		if (!sex || !height || !weight || !age || !ratio) {
@@ -420,15 +449,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function getStaticInfo(parentSelector, activeClass) {  
-		const elements = document.querySelectorAll(`${parentSelector} div`);
+	function getStaticInfo(selector, activeClass) {  
+		const elements = document.querySelectorAll(selector);
 
 		elements.forEach(el => {
 			el.addEventListener('click', (e) => {
 				if (e.target.getAttribute('data-ratio')) {
 					ratio = +e.target.getAttribute('data-ratio');
+					localStorage.setItem('ratio', ratio);
 				} else {
 					sex = e.target.getAttribute('id');
+					localStorage.setItem('sex', sex);
 				}
 	
 				elements.forEach(el => {
@@ -466,12 +497,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			calcTotal();
 		});
 	}
-	
+
+	initlocalSettings('#gender div', 'calculating__choose-item_active');
+	initlocalSettings('#ratio div', 'calculating__choose-item_active');
+ 
 	getDynamicInfo('#height');
 	getDynamicInfo('#weight');
 	getDynamicInfo('#age');
 
-	getStaticInfo('#gender', 'calculating__choose-item_active');
-	getStaticInfo('#ratio', 'calculating__choose-item_active');
+	getStaticInfo('#gender div', 'calculating__choose-item_active');
+	getStaticInfo('#ratio div', 'calculating__choose-item_active');
 });
 
