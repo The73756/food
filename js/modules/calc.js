@@ -104,4 +104,4 @@ function calc() {
 	getStaticInfo('#ratio div', 'calculating__choose-item_active');
 }
 
-module.exports = calc;
+export default calc;
